@@ -1,20 +1,20 @@
 const BackendURL = process.env.REACT_APP_BACKEND_URL || "http://localhost:8080";
 const SummaryApi = {
   addCreator: {
-    url: `${BackendURL}/add-creator`,
+    url: `${BackendURL}/api/add-creator`,
     method: "POST",
   },
   getAllCreators: {
-    url: `${BackendURL}/all-creators`,
+    url: `${BackendURL}/api/all-creators`,
     method: "GET",
   },
 
   getCreator: {
-    url: `${BackendURL}/creators`,
+    url: `${BackendURL}/api/creators`,
     method: "GET",
   },
   updateCreator: {
-    url: `${BackendURL}/update-creator`,
+    url: `${BackendURL}/api/update-creator`,
     method: "PATCH",
   },
 };

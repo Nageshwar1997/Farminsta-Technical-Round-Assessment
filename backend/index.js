@@ -4,7 +4,6 @@ const cors = require("cors");
 require("dotenv").config();
 const connectDB = require("./config/db");
 const router = require("./routes/index");
-const CreatorModel = require("./models/Creator.model");
 const addCreatorController = require("./controllers/addCreator.controller");
 const getAllCreatorsController = require("./controllers/getAllCreators.controller");
 const getCurrentCreatorController = require("./controllers/getCurrentCreator.controller");
@@ -23,10 +22,7 @@ app.use(express.json());
 // app.use(cookieParser()); // currently not installed
 
 // routes
-app.post("/add-creator", addCreatorController);
-app.get("/all-creators", getAllCreatorsController);
-app.get("/creators/:id", getCurrentCreatorController);
-app.patch("/update-creator/:id", updateCreatorController);
+app.use("/api", router);
 
 const PORT = process.env.PORT || 5000;
 connectDB()
