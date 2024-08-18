@@ -12,7 +12,7 @@ const updateCreatorController = require("./controllers/updateCreator.controller"
 const app = express();
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL || "https://farminsta-technical-round-assessment-frontend.vercel.app",
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
