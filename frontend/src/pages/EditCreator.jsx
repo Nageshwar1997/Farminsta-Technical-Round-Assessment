@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from "react";
+import SummaryApi from "../common";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { setCurrentCreator } from "../store/creatorReducer";
 import uploadImageCloudinary from "../helpers/uploadImageCloudinary";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { MdAddLink, MdModeEdit, MdDeleteOutline } from "react-icons/md";
+import { MdAddLink, MdDeleteOutline, MdModeEdit } from "react-icons/md";
 import socialMediaPlatforms from "../helpers/socialMediaPlatforms";
+import Context from "../context";
 
-import toast from "react-hot-toast";
-import SummaryApi from "../common";
+const EditCreator = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const currentCreator = useSelector(
+    (state) => state?.creators?.currentCreator
+  );
+  const { fetchCurrentCreator } = useContext(Context);
 
-const AddCreator = () => {
   const [isURL, setIsURL] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [socialMediaData, setSocialMediaData] = useState({
     platform: "",
     url: "",
   });
+
   const [creatorData, setCreatorData] = useState({
     bannerImageUrl: "",
     name: "",
@@ -24,37 +37,50 @@ const AddCreator = () => {
     specializations: [],
     socialMediaLinks: [],
   });
-  const handleBannerFileUpload = async (e) => {
-    const { files, type, name } = e.target;
 
-    if (type === "file" && files.length > 0) {
+  useEffect(() => {
+    if (currentCreator) {
+      setCreatorData({
+        bannerImageUrl: currentCreator.bannerImageUrl || "",
+        name: currentCreator.name || "",
+        email: currentCreator.email || "",
+        description: currentCreator.description || "",
+        education: currentCreator.education || "",
+        languages: currentCreator.languages || [],
+        specializations: currentCreator.specializations || [],
+        socialMediaLinks: currentCreator.socialMediaLinks || [],
+      });
+    }
+  }, [currentCreator]);
+
+  useEffect(() => {
+    fetchCurrentCreator(id);
+  }, [id]);
+
+  const handleBannerFileUpdate = async (e) => {
+    const { files } = e.target;
+    if (files.length > 0) {
       const imageFile = files[0];
       try {
-        const cloudinaryImageUrl = await uploadImageCloudinary(imageFile);
-        if (cloudinaryImageUrl.url) {
+        const cloudinaryImage = await uploadImageCloudinary(imageFile);
+        if (cloudinaryImage.url) {
           setCreatorData((prev) => ({
             ...prev,
-            [name]: cloudinaryImageUrl.url,
+            bannerImageUrl: cloudinaryImage.url,
           }));
-        }
-
-        if (cloudinaryImageUrl.url) {
-          toast.success("Banner uploaded successfully");
-        }
-
-        if (!cloudinaryImageUrl.url) {
-          toast.error("Banner upload failed");
+          toast.success("Banner Updated Successfully");
+        } else {
+          toast.error("Banner Update Failed");
         }
       } catch (error) {
         console.error("Error uploading image:", error);
-        toast.error("Banner upload failed");
+        toast.error("Banner Update Failed");
       }
     }
   };
 
   const handleSocialMediaInputChange = (e) => {
     const { name, value } = e.target;
-
     setSocialMediaData((prev) => ({
       ...prev,
       [name]: value,
@@ -72,16 +98,13 @@ const AddCreator = () => {
       });
       setEditIndex(null);
     } else {
-      // Add new link
       setCreatorData((prev) => ({
         ...prev,
         socialMediaLinks: [...prev.socialMediaLinks, socialMediaData],
       }));
     }
-    setSocialMediaData({
-      platform: "",
-      url: "",
-    });
+
+    setSocialMediaData({ platform: "", url: "" });
   };
 
   const handleEditSocialMediaLink = (index) => {
@@ -96,67 +119,50 @@ const AddCreator = () => {
     }));
     if (editIndex === index) {
       setEditIndex(null);
-      setSocialMediaData({
-        platform: "",
-        url: "",
-      });
+      setSocialMediaData({ platform: "", url: "" });
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     setCreatorData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const handleAddCreatorSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch(SummaryApi.addCreator.url, {
-        method: SummaryApi.addCreator.method,
+      const response = await fetch(`${SummaryApi.updateCreator.url}/${id}`, {
+        method: SummaryApi.updateCreator.method,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...creatorData,
-        }),
+        body: JSON.stringify(creatorData),
       });
 
       const responseData = await response.json();
 
-      console.log("responseData", responseData);
-
       if (responseData.success) {
+        dispatch(setCurrentCreator(responseData.creator));
         toast.success(responseData.message);
-        setCreatorData({
-          bannerImageUrl: "",
-          name: "",
-          email: "",
-          description: "",
-          education: "",
-          languages: [],
-          specializations: [],
-          socialMediaLinks: [],
-        });
-      }
-
-      if (responseData.error) {
-        toast.error(responseData.message);
+        setTimeout(() => {
+          navigate(`/view-creator-details/${id}`);
+        }, 2000);
       }
     } catch (error) {
-      console.log("Failed to add creator:", error);
-      toast.error("Failed to add creator");
+      console.log("Error:", error);
+      toast.error(error.message || "Something went wrong");
     }
   };
 
   return (
     <form className="w-full h-full gap-8 flex pb-2 bg-slate-200 px-10">
       <div className="w-full h-full overflow-y-auto py-4">
-        <h2 className="text-2xl font-semibold mb-2 text-center">Add Creator</h2>
+        <h2 className="text-2xl font-semibold mb-2 text-center">
+          Update Creator
+        </h2>
         <div className="grid gap-2 mt-2">
           <label htmlFor="name" className="text-lg">
             Name :{" "}
@@ -247,7 +253,7 @@ const AddCreator = () => {
                     name="bannerImageUrl"
                     id="bannerImageUrl"
                     className="hidden"
-                    onChange={handleBannerFileUpload}
+                    onChange={handleBannerFileUpdate}
                   />
                 </div>
               </div>
@@ -379,9 +385,9 @@ const AddCreator = () => {
         <div className="w-full h-12 flex justify-center items-center mt-4 text-lg font-semibold">
           <button
             className="bg-blue-600 text-white hover:bg-blue-700 shadow-md px-14 py-2 rounded-full"
-            onClick={handleAddCreatorSubmit}
+            onClick={handleSubmit}
           >
-            Add Creator
+            Update Creator
           </button>
         </div>
       </div>
@@ -389,4 +395,4 @@ const AddCreator = () => {
   );
 };
 
-export default AddCreator;
+export default EditCreator;

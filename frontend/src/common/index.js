@@ -8,6 +8,15 @@ const SummaryApi = {
     url: `${BackendURL}/all-creators`,
     method: "GET",
   },
+
+  getCreator: {
+    url: `${BackendURL}/creators`,
+    method: "GET",
+  },
+  updateCreator: {
+    url: `${BackendURL}/update-creator`,
+    method: "PATCH",
+  },
 };
 
 export default SummaryApi;

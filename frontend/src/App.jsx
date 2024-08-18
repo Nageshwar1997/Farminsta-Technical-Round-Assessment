@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import SummaryApi from "./common";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
-import { setCreatorsDetails } from "./store/creatorReducer";
+import { setCreatorsDetails, setCurrentCreator } from "./store/creatorReducer";
 function App() {
   const dispatch = useDispatch();
 
@@ -21,9 +21,28 @@ function App() {
 
       if (responseData.success) {
         dispatch(setCreatorsDetails(responseData.creators));
-        toast.success(responseData.message);
       }
 
+      if (responseData.error) {
+        toast.error(responseData.message);
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.message || "Something went wrong");
+    }
+  };
+
+  const fetchCurrentCreator = async (id) => {
+    try {
+      const response = await fetch(`${SummaryApi.getCreator.url}/${id}`, {
+        method: SummaryApi.getCreator.method,
+      });
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        dispatch(setCurrentCreator(responseData.creator));
+      }
       if (responseData.error) {
         toast.error(responseData.message);
       }
@@ -37,7 +56,7 @@ function App() {
     fetchAllCreators();
   }, []);
   return (
-    <Context.Provider value={{ fetchAllCreators }}>
+    <Context.Provider value={{ fetchAllCreators, fetchCurrentCreator }}>
       <div className="w-full h-[100vh] max-h-screen">
         <Header />
         <main className="pt-20 bg-slate-200 w-full h-full overflow-y-auto">
