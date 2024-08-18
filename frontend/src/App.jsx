@@ -16,7 +16,6 @@ function App() {
       const response = await fetch(SummaryApi.getAllCreators.url, {
         method: SummaryApi.getAllCreators.method,
       });
-
       const responseData = await response.json();
 
       if (responseData.success) {

@@ -128,7 +128,7 @@ const AddCreator = () => {
 
       const responseData = await response.json();
 
-      console.log("responseData", responseData);
+      // console.log("responseData", responseData);
 
       if (responseData.success) {
         toast.success(responseData.message);

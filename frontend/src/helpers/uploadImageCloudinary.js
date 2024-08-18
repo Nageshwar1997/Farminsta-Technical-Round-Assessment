@@ -1,8 +1,8 @@
 const cloudinaryURL = process.env.REACT_APP_CLOUDINARY_URL;
 const cloudinaryName = process.env.REACT_APP_CLOUDINARY_NAME;
 
-console.log("cloudinaryURL", cloudinaryURL);
-console.log("cloudinaryName", cloudinaryName);
+// console.log("cloudinaryURL", cloudinaryURL);
+// console.log("cloudinaryName", cloudinaryName);
 
 const uploadImageCloudinary = async (image) => {
   const formData = new FormData();

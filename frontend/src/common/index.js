@@ -17,6 +17,10 @@ const SummaryApi = {
     url: `${BackendURL}/api/update-creator`,
     method: "PATCH",
   },
+  searchCreators: {
+    url: `${BackendURL}/api/search`,
+    method: "GET",
+  },
 };
 
 export default SummaryApi;

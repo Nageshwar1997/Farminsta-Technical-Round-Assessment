@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import Home from "../pages/Home";
 import AddCreator from "../pages/AddCreator";
 import ViewCreatorDetails from "../pages/ViewCreatorDetails";
 import EditCreator from "../pages/EditCreator";
+import SearchCreators from "../pages/SearchCreators";
 
 const router = createBrowserRouter([
   {
@@ -11,8 +11,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "",
-        element: <Home />,
+        path: "search",
+        element: <SearchCreators />,
       },
       {
         path: "add-creator",
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       {
         path: "edit-creator/:id",
         element: <EditCreator />,
-      }
+      },
     ],
   },
 ]);

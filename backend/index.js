@@ -25,12 +25,16 @@ app.use(express.json());
 app.use("/api", router);
 
 const PORT = process.env.PORT || 5000;
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log("Server is Connected to MongoDB & running on port", PORT);
-    });
-  })
-  .catch((error) => {
-    console.log("Failed to connect to MongoDB", error);
-  });
+
+app.listen(PORT, async () => {
+  try {
+    await connectDB();
+    console.log("Server is Running on port", PORT);
+  } catch (error) {
+    console.log(
+      `Server is Running & Failed to connect to MongoDB on port ${PORT} ${
+        error.message || error
+      }`
+    );
+  }
+});
