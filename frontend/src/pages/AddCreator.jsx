@@ -4,6 +4,9 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdAddLink, MdModeEdit, MdDeleteOutline } from "react-icons/md";
 import socialMediaPlatforms from "../helpers/socialMediaPlatforms";
 
+import toast from "react-hot-toast";
+import SummaryApi from "../common";
+
 const AddCreator = () => {
   const [isURL, setIsURL] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
@@ -34,8 +37,17 @@ const AddCreator = () => {
             [name]: cloudinaryImageUrl.url,
           }));
         }
+
+        if (cloudinaryImageUrl.url) {
+          toast.success("Banner uploaded successfully");
+        }
+
+        if (!cloudinaryImageUrl.url) {
+          toast.error("Banner upload failed");
+        }
       } catch (error) {
         console.error("Error uploading image:", error);
+        toast.error("Banner upload failed");
       }
     }
   };
@@ -53,7 +65,6 @@ const AddCreator = () => {
     if (!socialMediaData.platform || !socialMediaData.url) return;
 
     if (editIndex !== null) {
-      // Update existing link
       setCreatorData((prev) => {
         const updatedLinks = [...prev.socialMediaLinks];
         updatedLinks[editIndex] = socialMediaData;
@@ -104,6 +115,43 @@ const AddCreator = () => {
   const handleAddCreatorSubmit = async (e) => {
     e.preventDefault();
 
+    try {
+      const response = await fetch(SummaryApi.addCreator.url, {
+        method: SummaryApi.addCreator.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...creatorData,
+        }),
+      });
+
+      const responseData = await response.json();
+
+      console.log("responseData", responseData);
+
+      if (responseData.success) {
+        toast.success(responseData.message);
+        setCreatorData({
+          bannerImageUrl: "",
+          name: "",
+          email: "",
+          description: "",
+          education: "",
+          languages: [],
+          specializations: [],
+          socialMediaLinks: [],
+        });
+      }
+
+      if (responseData.error) {
+        toast.error(responseData.message);
+      }
+    } catch (error) {
+      console.log("Failed to add creator:", error);
+      toast.error("Failed to add creator");
+    }
+
     console.log("creatorData", creatorData);
   };
 
@@ -135,7 +183,7 @@ const AddCreator = () => {
             id="email"
             placeholder="Enter Email"
             className="w-full h-12 px-3 border shadow-md border-gray-300 rounded-md focus-within:outline-none focus-within:border-blue-500"
-            value={creatorData.email}
+            value={creatorData.email.toLowerCase()}
             onChange={handleInputChange}
           />
         </div>
@@ -302,10 +350,10 @@ const AddCreator = () => {
             onChange={(e) =>
               setCreatorData((prev) => ({
                 ...prev,
-                languages: e.target.value.split("\n"),
+                languages: e.target.value.split(", "),
               }))
             }
-            value={creatorData.languages.join("\n")}
+            value={creatorData.languages.join(", ")}
           />
         </div>
         <div className="grid gap-2 mt-2">
@@ -324,10 +372,10 @@ const AddCreator = () => {
             onChange={(e) =>
               setCreatorData((prev) => ({
                 ...prev,
-                specializations: e.target.value.split("\n"),
+                specializations: e.target.value.split(", "),
               }))
             }
-            value={creatorData.specializations.join("\n")}
+            value={creatorData.specializations.join(", ")}
           />
         </div>
         <div className="w-full h-12 flex justify-center items-center mt-4 text-lg font-semibold">

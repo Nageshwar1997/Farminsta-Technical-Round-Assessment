@@ -33,6 +33,8 @@ const CreatorSchema = new mongoose.Schema({
   },
   specializations: [String],
   socialMediaLinks: { type: [SocialMediaLinkSchema] },
+}, {
+  versionKey: false,
 });
 
 module.exports = CreatorSchema;

@@ -156,14 +156,15 @@ app.post("/add-creator", async (req, res) => {
   }
 });
 
-app.get("/all-todos", async (req, res) => {
+app.get("/all-creators", async (req, res) => {
   try {
-    const todos = await TodoModel.find();
+    const creators = await CreatorModel.find();
+
     res.status(200).json({
-      message: "Todos fetched successfully",
+      message: "Creators fetched successfully",
       success: true,
       error: false,
-      todos,
+      creators,
     });
   } catch (error) {
     res.status(500).json({
@@ -241,9 +242,12 @@ app.delete("/delete-todo/:id", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log("Server are Connected to MongoDB");
-    console.log("Server is running on port", PORT);
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log("Server is Connected to MongoDB & running on port", PORT);
+    });
+  })
+  .catch((error) => {
+    console.log("Failed to connect to MongoDB", error);
   });
-});

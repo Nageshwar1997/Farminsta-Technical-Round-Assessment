@@ -6,14 +6,16 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes";
+import { Toaster } from "react-hot-toast";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <>
     <Provider store={store}>
+      <Toaster />
       <RouterProvider router={router} />
     </Provider>
-  </React.StrictMode>
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function
