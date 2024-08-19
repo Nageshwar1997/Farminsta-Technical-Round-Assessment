@@ -5,7 +5,7 @@ const SummaryApi = {
     method: "POST",
   },
   getAllCreators: {
-    url: `${BackendURL}/api/all-creators`,
+    url: `${BackendURL}/creators`,
     method: "GET",
   },
 
