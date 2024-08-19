@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import languagesList from "../helpers/languagesList";
 import educationsList from "../helpers/educationsList";
 import specializationsList from "../helpers/specializationsList";
 
 const Header = () => {
-  const searchInputRef = useRef()
+  const searchInputRef = useRef();
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
   const URLSearch = new URLSearchParams(search);
@@ -55,10 +55,10 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  },[])
+    // if (searchInputRef.current) {
+    //   searchInputRef.current.focus();
+    // }
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 w-full h-16 z-10 shadow-md bg-gray-200 flex justify-between items-center px-10">
@@ -120,7 +120,7 @@ const Header = () => {
         </div>
 
         <div className="max-w-[120px] w-full h-full flex items-center justify-center">
-          {pathname === "/search" && !search ? (
+          {/* {pathname === "/search" && !search ? (
             <Link
               to="/add-creator"
               className="w-full p-3 text-center rounded-md bg-blue-400 hover:bg-blue-600 shadow-lg"
@@ -130,18 +130,24 @@ const Header = () => {
           ) : pathname === "/search" && search ? (
             <button
               className="w-full p-3 text-center rounded-md bg-blue-400 hover:bg-blue-600 shadow-lg"
-              onClick={handleClearSearchAndFilter}
+              onClick={() => handleClearSearchAndFilter()}
             >
               Clear Filters
             </button>
           ) : (
             <Link
-              to="/search"
+              to="/"
               className="w-full p-3 text-center rounded-md bg-blue-400 hover:bg-blue-600 shadow-lg"
             >
-              Cancel
+              Home
             </Link>
-          )}
+          )} */}
+          <button
+            className="w-full p-3 text-center rounded-md bg-blue-400 hover:bg-blue-600 shadow-lg"
+            // onClick={() => handleClearSearchAndFilter()}
+          >
+            Clear Filters
+          </button>
         </div>
       </div>
     </header>

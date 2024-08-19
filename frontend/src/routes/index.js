@@ -4,12 +4,17 @@ import AddCreator from "../pages/AddCreator";
 import ViewCreatorDetails from "../pages/ViewCreatorDetails";
 import EditCreator from "../pages/EditCreator";
 import SearchCreators from "../pages/SearchCreators";
+import Home from "../pages/Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "",
+        element: <Home />,
+      },
       {
         path: "search",
         element: <SearchCreators />,
