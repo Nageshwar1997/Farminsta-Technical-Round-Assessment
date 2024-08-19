@@ -18,7 +18,7 @@ const SummaryApi = {
     method: "PATCH",
   },
   searchCreators: {
-    url: `${BackendURL}/api/search`,
+    url: `${BackendURL}/search`,
     method: "GET",
   },
 };
