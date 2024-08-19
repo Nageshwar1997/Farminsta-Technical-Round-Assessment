@@ -1,40 +1,92 @@
-const express = require("express");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
 require("dotenv").config();
-const connectDB = require("./config/db");
-const router = require("./routes/index");
-
-const app = express();
-app.use(cors());
-// app.use(
-//   cors({
-//     origin:
-//       process.env.FRONTEND_URL ||
-//       "https://farminsta-technical-round-assessment-frontend.vercel.app",
-//     methods: ["GET", "POST", "PATCH", "DELETE"],
-//     credentials: true,
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//   })
-// );
-
-app.use(express.json());
-app.use(cookieParser());
-
-// routes
-app.use("/api", router);
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const router = express.Router();
 
 const PORT = process.env.PORT || 5000;
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Schema
+const SocialMediaLinkSchema = new mongoose.Schema(
+  {
+    platform: { type: String, required: true },
+    url: { type: String, required: true },
+  },
+  { _id: false } // Disable the _id field for this schema
+);
+
+const CreatorSchema = new mongoose.Schema(
+  {
+    bannerImageUrl: {
+      type: String,
+      trim: true,
+    },
+    name: {
+      type: String,
+      trim: true,
+    },
+    email: {
+      type: String,
+      trim: true,
+    },
+    description: {
+      type: String,
+      trim: true,
+    },
+    languages: [String],
+    education: {
+      type: String,
+      trim: true,
+      default: "N/A",
+    },
+    specializations: [String],
+    socialMediaLinks: { type: [SocialMediaLinkSchema] },
+  },
+  {
+    versionKey: false,
+  }
+);
+
+// Model
+const CreatorModel = mongoose.model("Creator", CreatorSchema);
+
+// Controllers
+const getAllCreatorsController = async (req, res) => {
+  try {
+    const creators = await CreatorModel.find();
+
+    res.status(200).json({
+      message: "Creators fetched successfully",
+      success: true,
+      error: false,
+      creators,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Something went wrong",
+      success: false,
+      error: true,
+    });
+  }
+};
+
+// Routes
+router.get("/all-creators", getAllCreatorsController);
+
+// Router
+app.use("/api", router);
+
 app.listen(PORT, async () => {
   try {
-    await connectDB();
-    console.log("Server is Running on port", PORT);
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log(`Server connected to MongoDB`);
+    console.log(`Server running on port: ${PORT}`);
   } catch (error) {
-    console.log(
-      `Server is Running & Failed to connect to MongoDB on port ${PORT} ${
-        error.message || error
-      }`
-    );
+    console.log("Error: ", error.message || error);
   }
 });
