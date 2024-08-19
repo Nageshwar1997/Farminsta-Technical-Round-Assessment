@@ -6,16 +6,17 @@ const connectDB = require("./config/db");
 const router = require("./routes/index");
 
 const app = express();
-app.use(
-  cors({
-    origin:
-      process.env.FRONTEND_URL ||
-      "https://farminsta-technical-round-assessment-frontend.vercel.app",
-    methods: ["GET", "POST", "PATCH", "DELETE"],
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors());
+// app.use(
+//   cors({
+//     origin:
+//       process.env.FRONTEND_URL ||
+//       "https://farminsta-technical-round-assessment-frontend.vercel.app",
+//     methods: ["GET", "POST", "PATCH", "DELETE"],
+//     credentials: true,
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
 
 app.use(express.json());
 app.use(cookieParser());
