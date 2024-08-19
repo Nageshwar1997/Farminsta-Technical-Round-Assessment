@@ -10,7 +10,7 @@ const SummaryApi = {
   },
 
   getCreator: {
-    url: `${BackendURL}/api/creators`,
+    url: `${BackendURL}/creator`,
     method: "GET",
   },
   updateCreator: {
