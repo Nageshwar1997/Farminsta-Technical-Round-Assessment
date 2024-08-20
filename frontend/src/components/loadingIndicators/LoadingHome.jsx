@@ -36,7 +36,7 @@ const LoadingHome = () => {
                 {socialMediaLinks.map((_, index) => (
                   <div
                     key={index}
-                    className="bg-slate-300 dark:bg-gray-800 p-2 sm:p-4 md:p-6 rounded-full transition-colors duration-300 animate-pulse"
+                    className="bg-slate-300 dark:bg-gray-800 p-4 md:p-6 rounded-full transition-colors duration-300 animate-pulse"
                   ></div>
                 ))}
               </div>
