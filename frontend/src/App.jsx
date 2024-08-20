@@ -8,7 +8,7 @@ import SummaryApi from "./common";
 import toast from "react-hot-toast";
 import { useContext, useEffect } from "react";
 import { setCreatorsDetails, setCurrentCreator } from "./store/creatorReducer";
-import { ThemeContext, ThemeProvider } from "./context/theme.context";
+import { ThemeContext } from "./context/theme.context";
 import { FaSun, FaMoon } from "react-icons/fa";
 function App() {
   const dispatch = useDispatch();

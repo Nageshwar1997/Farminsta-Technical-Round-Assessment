@@ -159,7 +159,7 @@ const Header = () => {
             : isSmallScreen && !showFilters
             ? "hidden"
             : ""
-        } sm:block`}
+        } sm:block w-full`}
       >
         <div className="grid grid-cols-2 sm:flex sm:flex-row justify-between sm:items-start w-full max-w-5xl gap-2 sm:gap-4 mx-auto">
           {/* Language Filter */}
