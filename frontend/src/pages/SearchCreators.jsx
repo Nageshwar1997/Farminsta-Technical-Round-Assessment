@@ -107,7 +107,7 @@ const SearchCreators = () => {
     .map((item) =>
       typeof item[0] === "string" ? item[0].replace(/\+/g, " ") : item
     )
-    .join(", ");
+    .join(" & ");
 
   return loading && !error ? (
     <LoadingHome />
