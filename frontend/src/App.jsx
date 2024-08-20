@@ -6,10 +6,13 @@ import Context from "./context";
 import { useDispatch } from "react-redux";
 import SummaryApi from "./common";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { setCreatorsDetails, setCurrentCreator } from "./store/creatorReducer";
+import { ThemeContext, ThemeProvider } from "./context/theme.context";
+import { FaSun, FaMoon } from "react-icons/fa";
 function App() {
   const dispatch = useDispatch();
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const fetchAllCreators = async () => {
     try {
@@ -56,14 +59,23 @@ function App() {
   }, []);
   return (
     <Context.Provider value={{ fetchAllCreators, fetchCurrentCreator }}>
-  <div className="w-full h-full min-h-screen max-h-screen overflow-hidden">
-    <Header />
-    <main className="pt-16 md:pt-20 lg:pt-24 bg-slate-200 w-full h-full overflow-y-auto">
-      <Outlet />
-    </main>
-  </div>
-</Context.Provider>
-
+      <div className="w-full h-full min-h-screen max-h-screen">
+        <Header />
+        <main className="pt-16 base:pt-16 sm:pt-16 md:pt-20 lg:pt-24 bg-slate-200 w-full h-full dark:bg-darkBackground dark:text-darkText">
+          <Outlet />
+          <button
+            onClick={toggleTheme}
+            className={`fixed bottom-4 right-4 p-3 transition-transform duration-300 ease-in-out rounded-full shadow-2xl transform ${
+              theme === "white"
+                ? "bg-slate-700 text-white hover:bg-slate-800 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-600"
+                : "bg-slate-200 text-black hover:bg-slate-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+            } z-50 focus:outline-none`}
+          >
+            {theme === "white" ? <FaMoon size={20} /> : <FaSun size={20} />}
+          </button>
+        </main>
+      </div>
+    </Context.Provider>
   );
 }
 

@@ -7,13 +7,16 @@ import { store } from "./store/store";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes";
 import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "./context/theme.context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     <Provider store={store}>
-      <Toaster />
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <Toaster />
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   </>
 );
