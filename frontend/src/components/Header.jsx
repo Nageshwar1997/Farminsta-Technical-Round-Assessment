@@ -231,7 +231,7 @@ const Header = () => {
             {pathname === "/search" && search && (
               <button
                 onClick={handleClearSearchAndFilter}
-                className="w-full py-2 px-4 text-sm rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out"
+                className="min-w-[120px] w-full py-2 px-4 text-sm rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out truncate"
               >
                 Clear
               </button>
@@ -239,7 +239,7 @@ const Header = () => {
             {pathname === "/" && (
               <Link
                 to={"/add-creator"}
-                className="w-full py-2 px-4 text-sm xl:text-lg rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out"
+                className="min-w-[120px] w-full py-2 px-4 text-sm rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out truncate"
               >
                 Add New
               </Link>
@@ -247,7 +247,7 @@ const Header = () => {
             {pathname === "/add-creator" && (
               <Link
                 to={"/"}
-                className="w-full py-2 px-4 text-sm rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out"
+                className="min-w-[120px] w-full py-2 px-4 text-sm rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out truncate"
               >
                 Cancel
               </Link>
@@ -256,7 +256,7 @@ const Header = () => {
               pathname.includes("/edit-creator")) && (
               <Link
                 to={"/"}
-                className="w-full py-2 px-4 text-sm rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out"
+                className="min-w-[120px] w-full py-2 px-4 text-sm rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out truncate"
               >
                 Home
               </Link>
