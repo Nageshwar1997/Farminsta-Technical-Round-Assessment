@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import languagesList from "../helpers/languagesList";
 import educationsList from "../helpers/educationsList";
 import specializationsList from "../helpers/specializationsList";
+import { FaBars } from "react-icons/fa6";
 
 const Header = () => {
   const { pathname, search } = useLocation();
@@ -19,6 +20,8 @@ const Header = () => {
   const [selectedEducation, setSelectedEducation] = useState(educationQuery);
   const [selectedSpecialization, setSelectedSpecialization] =
     useState(specializationQuery);
+  const [showFilters, setShowFilters] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640);
   const searchInputRef = useRef();
 
   useEffect(() => {
@@ -65,33 +68,65 @@ const Header = () => {
 
   useEffect(() => {
     // Focus on the search input when the component mounts
-    if (searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
+    // if (searchInputRef.current) {
+    //   searchInputRef.current.focus();
+    // }
   }, []);
+
+  console.log("pathname", pathname);
+  console.log("search", search);
+
+  useEffect(() => {
+    const handleResize = () => setIsSmallScreen(window.innerWidth < 640);
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isSmallScreen) {
+      setShowFilters(false);
+    } else {
+      setShowFilters(true);
+    }
+  }, [isSmallScreen]);
   return (
-    <header className="fixed top-0 left-0 w-full h-16 z-10 shadow-md bg-gray-200 flex flex-col sm:flex-row justify-between items-center px-4 sm:px-6 md:px-8 lg:px-10 dark:bg-darkBackground dark:text-darkText">
+    <header className="fixed top-0 left-0 w-full pt-2 h-16 z-10 shadow-md bg-gray-200 dark:bg-darkBackground dark:text-darkText flex flex-col sm:flex-row justify-between items-center px-4 sm:px-6 md:px-8 lg:px-10">
       {/* Search Input Container */}
-      <div className="w-full sm:w-1/2 h-12 flex items-center justify-center mb-2 sm:mb-0 sm:mr-5">
+      <div className="w-full sm:w-1/2 flex items-center justify-between mb-2 sm:mb-0 sm:mr-5">
         <input
           type="text"
           ref={searchInputRef}
           value={pathname === "/search" && search ? searchInput : ""}
           onChange={handleSearchInput}
           placeholder="Search Creators..."
-          className="w-full h-full px-3 base:py-2 sm:py-0  border shadow-md border-gray-300 rounded-md focus-within:outline-none focus-within:border-blue-500 dark:bg-whiteText dark:border-darkText"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-darkText rounded-md shadow-md focus:outline-none focus:border-blue-500 dark:bg-whiteText dark:focus:border-blue-300 transition-colors duration-300"
         />
+        <button
+          className="ml-2 p-2 sm:hidden rounded-full border border-gray-300 dark:border-darkText transition-colors duration-300 ease-in-out bg-gray-200 dark:bg-darkBackground text-gray-800 dark:text-darkText hover:bg-gray-300 dark:hover:bg-darkBackgroundDark focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300"
+          onClick={() => setShowFilters((prev) => !prev)}
+        >
+          <FaBars size={20} />
+        </button>
       </div>
 
       {/* Filter Options */}
-      <div className="flex justify-center w-full">
+      <div
+        className={`transition-all duration-300 ease-in-out ${
+          !isSmallScreen
+            ? "block"
+            : isSmallScreen && !showFilters
+            ? "hidden"
+            : ""
+        } sm:block`}
+      >
         <div className="grid grid-cols-2 sm:flex sm:flex-row justify-between sm:items-start w-full max-w-5xl gap-2 sm:gap-4 mx-auto">
           {/* Language Filter */}
-          <div className="w-full max-w-[200px] flex items-center justify-center">
+          <div className="w-full max-w-[250px] flex items-center justify-center">
             <select
               value={pathname === "/search" ? selectedLanguage : ""}
               onChange={handleFilterChange(setSelectedLanguage)}
-              className="w-full p-2 text-sm rounded-md bg-slate-100 shadow-md dark:bg-gray-800 sm:h-12 dark:text-darkText dark:border-darkText"
+              className="w-full py-2 px-3 text-sm rounded-md border border-gray-300 dark:border-darkText bg-slate-100 dark:bg-whiteText dark:text-darkText shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300"
             >
               <option value="">Language</option>
               {languagesList &&
@@ -104,11 +139,11 @@ const Header = () => {
           </div>
 
           {/* Education Filter */}
-          <div className="w-full max-w-[200px] flex items-center justify-center">
+          <div className="w-full max-w-[250px] flex items-center justify-center">
             <select
               value={pathname === "/search" ? selectedEducation : ""}
               onChange={handleFilterChange(setSelectedEducation)}
-              className="w-full p-2 text-sm rounded-md bg-slate-100 shadow-md dark:bg-gray-800 sm:h-12 dark:text-darkText dark:border-darkText"
+              className="w-full py-2 px-3 text-sm rounded-md border border-gray-300 dark:border-darkText bg-slate-100 dark:bg-whiteText dark:text-darkText shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300"
             >
               <option value="">Education</option>
               {educationsList &&
@@ -121,11 +156,11 @@ const Header = () => {
           </div>
 
           {/* Specialization Filter */}
-          <div className="w-full max-w-[200px] flex items-center justify-center">
+          <div className="w-full max-w-[250px] flex items-center justify-center">
             <select
               value={pathname === "/search" ? selectedSpecialization : ""}
               onChange={handleFilterChange(setSelectedSpecialization)}
-              className="w-full p-2 text-sm rounded-md bg-slate-100 shadow-md dark:bg-gray-800 sm:h-12 dark:text-darkText dark:border-darkText"
+              className="w-full py-2 px-3 text-sm rounded-md border border-gray-300 dark:border-darkText bg-slate-100 dark:bg-whiteText dark:text-darkText shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300"
             >
               <option value="">Specialization</option>
               {specializationsList &&
@@ -138,10 +173,10 @@ const Header = () => {
           </div>
 
           {/* Action Button */}
-          <div className="w-full max-w-[200px] flex items-center justify-center">
+          <div className="w-full max-w-[250px] flex items-center justify-center">
             <button
               onClick={handleClearSearchAndFilter}
-              className="w-full p-2 text-sm text-center rounded-md bg-blue-400 hover:bg-blue-600 sm:h-12 shadow-lg dark:bg-blue-500 dark:hover:bg-blue-700"
+              className="w-full py-2 px-4 text-sm rounded-md bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300"
             >
               Clear
             </button>
