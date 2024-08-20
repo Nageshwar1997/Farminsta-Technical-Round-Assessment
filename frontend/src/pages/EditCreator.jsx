@@ -226,24 +226,25 @@ const EditCreator = () => {
             </div>
 
             {/* Banner Image */}
-            <div>
-              <label
-                htmlFor="bannerImageUrl"
-                className="block text-lg font-medium mt-4 text-slate-700 dark:text-slate-300"
-              >
-                Banner Image:
-              </label>
+            {creatorData?.bannerImageUrl && (
+              <div>
+                <label
+                  className="block text-lg font-medium mt-4 text-slate-700 dark:text-slate-300"
+                >
+                  Banner Image:
+                </label>
 
-              <div className="p-4 border border-gray-300 dark:border-gray-600 rounded-md flex justify-center items-center bg-white dark:bg-gray-800">
-                <div className="flex flex-col items-center gap-2">
-                  <img
-                    src={creatorData.bannerImageUrl}
-                    alt={creatorData.name}
-                    className="w-full h-full object-cover rounded-md"
-                  />
+                <div className="p-4 border border-gray-300 dark:border-gray-600 rounded-md flex justify-center items-center bg-white dark:bg-gray-800">
+                  <div className="flex flex-col items-center gap-2">
+                    <img
+                      src={creatorData.bannerImageUrl}
+                      alt={creatorData.name}
+                      className="w-full h-full object-cover rounded-md"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Change Banner */}
             <div>
