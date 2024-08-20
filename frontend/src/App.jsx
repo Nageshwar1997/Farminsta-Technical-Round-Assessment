@@ -56,13 +56,14 @@ function App() {
   }, []);
   return (
     <Context.Provider value={{ fetchAllCreators, fetchCurrentCreator }}>
-      <div className="w-full h-[100vh] max-h-screen">
-        <Header />
-        <main className="pt-20 bg-slate-200 w-full h-full overflow-y-auto">
-          <Outlet />
-        </main>
-      </div>
-    </Context.Provider>
+  <div className="w-full h-full min-h-screen max-h-screen overflow-hidden">
+    <Header />
+    <main className="pt-16 md:pt-20 lg:pt-24 bg-slate-200 w-full h-full overflow-y-auto">
+      <Outlet />
+    </main>
+  </div>
+</Context.Provider>
+
   );
 }
 
