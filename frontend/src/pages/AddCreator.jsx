@@ -154,235 +154,315 @@ const AddCreator = () => {
   };
 
   return (
-    <form className="w-full h-full gap-8 flex pb-2 bg-slate-200 px-10">
-      <div className="w-full h-full overflow-y-auto py-4">
-        <h2 className="text-2xl font-semibold mb-2 text-center">Add Creator</h2>
-        <div className="grid gap-2 mt-2">
-          <label htmlFor="name" className="text-lg">
-            Name :{" "}
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Enter Full Name"
-            className="w-full h-12 px-3 border shadow-md border-gray-300 rounded-md focus-within:outline-none focus-within:border-blue-500"
-            value={creatorData.name}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="grid gap-2 mt-2">
-          <label htmlFor="email" className="text-lg">
-            Email :{" "}
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Enter Email"
-            className="w-full h-12 px-3 border shadow-md border-gray-300 rounded-md focus-within:outline-none focus-within:border-blue-500"
-            value={creatorData.email.toLowerCase()}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="grid gap-2 mt-2">
-          <label htmlFor="education" className="text-lg">
-            Education :{" "}
-          </label>
-          <input
-            type="text"
-            name="education"
-            id="education"
-            placeholder="Enter Education"
-            className="w-full h-12 px-3 border shadow-md border-gray-300 rounded-md focus-within:outline-none focus-within:border-blue-500"
-            value={creatorData.education}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="grid gap-2 mt-2">
-          <label
-            htmlFor="bannerImageUrl"
-            className="cursor-pointer w-fit mt-3 flex gap-4"
-          >
-            Banner Image :
-            <div className="flex gap-2 items-center">
-              <p>File</p>
-              <input
-                type="radio"
-                className="w-4 h-4"
-                checked={!isURL}
-                onChange={() => setIsURL(false)}
-              />
-            </div>
-            <div className="flex gap-2 items-center">
-              <p>URL</p>
-              <input
-                type="radio"
-                className="w-4 h-4"
-                checked={isURL}
-                onChange={() => setIsURL(true)}
-              />
-            </div>
-          </label>
-          {isURL ? (
+    <form className="w-full min-h-screen flex flex-col gap-8 bg-slate-200 dark:bg-darkBackground px-4 sm:px-6 md:px-8 lg:px-10">
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Left Column */}
+        <div className="flex-1 overflow-y-auto pb-4">
+          <h2 className="text-2xl font-semibold mb-4 text-center text-slate-800 dark:text-slate-200">
+            Add Creator
+          </h2>
+
+          {/* Name */}
+          <div className="grid gap-4 mb-4">
+            <label
+              htmlFor="name"
+              className="text-lg font-medium text-slate-700 dark:text-slate-300"
+            >
+              Name:
+            </label>
             <input
               type="text"
-              name="bannerImageUrl"
-              id="bannerImageUrl"
-              placeholder="Enter Banner Image Url"
-              className="w-full h-12 px-3 border shadow-md border-gray-300 rounded-md focus-within:outline-none focus-within:border-blue-500"
-              value={creatorData.bannerImageUrl}
+              name="name"
+              id="name"
+              placeholder="Enter Full Name"
+              className="w-full h-12 px-3 border border-gray-300 dark:border-gray-600 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
+              value={creatorData.name}
               onChange={handleInputChange}
             />
-          ) : (
-            <label htmlFor="bannerImageUrl" className="cursor-grab">
-              <div className="p-2 border rounded-md h-36 w-full flex justify-center items-center bg-white">
-                <div className="text-slate-500 flex flex-col gap-2 justify-center items-center">
-                  <span className="text-4xl">
-                    <FaCloudUploadAlt />
-                  </span>
-                  <p className="text-sm">Upload Banner Image</p>
-                  <input
-                    type="file"
-                    name="bannerImageUrl"
-                    id="bannerImageUrl"
-                    className="hidden"
-                    onChange={handleBannerFileUpload}
-                  />
-                </div>
-              </div>
-            </label>
-          )}
-        </div>
-      </div>
-      <div className="w-full h-full overflow-y-auto p-4">
-        <div className="grid gap-2 mt-2">
-          <label htmlFor="url" className="text-lg">
-            Social Media Links :{" "}
-          </label>
-          <div className="w-full flex gap-2">
-            <select
-              name="platform"
-              id="platform"
-              value={socialMediaData.platform}
-              onChange={handleSocialMediaInputChange}
-              className="rounded-md focus-within:outline-none border border-gray-300 focus-within:border-gray-400"
+          </div>
+
+          {/* Email */}
+          <div className="grid gap-4 mb-4">
+            <label
+              htmlFor="email"
+              className="text-lg font-medium text-slate-700 dark:text-slate-300"
             >
-              <option value="">Select Platform</option>
-              {socialMediaPlatforms.map((platform) => (
-                <option key={platform.id} value={platform.label}>
-                  {platform.value}
-                </option>
-              ))}
-            </select>
+              Email:
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter Email"
+              className="w-full h-12 px-3 border border-gray-300 dark:border-gray-600 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
+              value={creatorData.email.toLowerCase()}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          {/* Education */}
+          <div className="grid gap-4 mb-4">
+            <label
+              htmlFor="education"
+              className="text-lg font-medium text-slate-700 dark:text-slate-300"
+            >
+              Education:
+            </label>
             <input
               type="text"
-              name="url"
-              id="url"
-              placeholder="Enter Full Name"
-              className="w-full h-12 px-3 border shadow-md border-gray-300 rounded-md focus-within:outline-none focus-within:border-blue-500"
-              value={socialMediaData.url}
-              onChange={handleSocialMediaInputChange}
+              name="education"
+              id="education"
+              placeholder="Enter Education"
+              className="w-full h-12 px-3 border border-gray-300 dark:border-gray-600 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
+              value={creatorData.education}
+              onChange={handleInputChange}
             />
-            <span
-              className="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-500 text-white text-3xl px-1"
-              onClick={handleAddSocialMediaLink}
-            >
-              <MdAddLink />
-            </span>
           </div>
-        </div>
-        {creatorData.socialMediaLinks.length > 0 && (
-          <div className="grid gap-2 mt-2">
-            {creatorData.socialMediaLinks.map((link, index) => (
-              <div
-                key={index}
-                className="max-w-[200px] w-full flex justify-between items-center"
-              >
-                <p className="text-lg font-semibold">{link.platform}</p>
-                <div className="flex gap-2">
-                  <span
-                    className="p-2 bg-green-500 rounded-full hover:bg-green-600 text-white"
-                    onClick={() => handleEditSocialMediaLink(index)}
-                  >
-                    <MdModeEdit />
-                  </span>
-                  <span
-                    className="p-2 bg-red-500 rounded-full hover:bg-red-600 hover:text-white"
-                    onClick={() => handleDeleteSocialMediaLink(index)}
-                  >
-                    <MdDeleteOutline />
-                  </span>
-                </div>
+
+          {/* Banner Image */}
+          {creatorData?.bannerImageUrl && (
+            <div className="mb-4">
+              <label className="block text-lg font-medium text-slate-700 dark:text-slate-300">
+                Banner Image:
+              </label>
+              <div className="p-4 border border-gray-300 dark:border-gray-600 rounded-md flex justify-center items-center bg-white dark:bg-gray-800">
+                <img
+                  src={creatorData.bannerImageUrl}
+                  alt={creatorData.name}
+                  className="w-full h-full object-cover rounded-md"
+                />
               </div>
-            ))}
+            </div>
+          )}
+
+          {/* Banner Image Upload/URL */}
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-slate-700 dark:text-slate-300">
+              Change Banner:
+            </label>
+            <div className="flex gap-4 mt-2">
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  className="w-4 h-4"
+                  checked={!isURL}
+                  onChange={() => setIsURL(false)}
+                />
+                <span className="ml-2 text-slate-800 dark:text-slate-200">
+                  File
+                </span>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  className="w-4 h-4"
+                  checked={isURL}
+                  onChange={() => setIsURL(true)}
+                />
+                <span className="ml-2 text-slate-800 dark:text-slate-200">
+                  URL
+                </span>
+              </div>
+            </div>
+            {isURL ? (
+              <input
+                type="text"
+                name="bannerImageUrl"
+                id="bannerImageUrl"
+                placeholder="Enter Banner Image URL"
+                className="w-full h-12 px-3 border border-gray-300 dark:border-gray-600 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 mt-2"
+                value={creatorData.bannerImageUrl}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <label htmlFor="bannerImageUrl" className="block cursor-pointer">
+                <div className="p-4 border border-gray-300 dark:border-gray-600 rounded-md h-36 flex justify-center items-center bg-white dark:bg-gray-800">
+                  <div className="text-slate-500 dark:text-slate-400 flex flex-col items-center gap-2">
+                    <span className="text-4xl">
+                      <FaCloudUploadAlt />
+                    </span>
+                    <p className="text-sm">Upload Banner Image</p>
+                    <input
+                      type="file"
+                      name="bannerImageUrl"
+                      id="bannerImageUrl"
+                      className="hidden"
+                      onChange={handleBannerFileUpload}
+                    />
+                  </div>
+                </div>
+              </label>
+            )}
           </div>
-        )}
-        <div className="grid gap-2 mt-2">
-          <label htmlFor="description" className="text-lg">
-            Description :{" "}
-          </label>
-          <textarea
-            name="description"
-            id="description"
-            className="w-full max-h-36 h-full shadow-md rounded-md focus-within:outline-none border border-gray-300 focus-within:border-blue-500 p-2"
-            placeholder="Enter description"
-            rows={3}
-            onChange={handleInputChange}
-            value={creatorData.description}
-          />
         </div>
-        <div className="grid gap-2 mt-2">
-          <label htmlFor="languages" className="text-lg">
-            Languages :{" "}
-            <span className="text-red-700 text-xs">
-              Press Enter key after each language*
-            </span>
-          </label>
-          <textarea
-            name="languages"
-            id="languages"
-            className="w-full max-h-36 h-full shadow-md rounded-md focus-within:outline-none border border-gray-300 focus-within:border-blue-500 p-2"
-            placeholder="Enter Languages"
-            rows={3}
-            onChange={(e) =>
-              setCreatorData((prev) => ({
-                ...prev,
-                languages: e.target.value.split(", "),
-              }))
-            }
-            value={creatorData.languages.join(", ")}
-          />
-        </div>
-        <div className="grid gap-2 mt-2">
-          <label htmlFor="specialization" className="text-lg">
-            Specialization :{" "}
-            <span className="text-red-700 text-xs">
-              Press Enter key after each specialization*
-            </span>
-          </label>
-          <textarea
-            name="specialization"
-            id="specialization"
-            className="w-full max-h-36 h-full shadow-md rounded-md focus-within:outline-none border border-gray-300 focus-within:border-blue-500 p-2"
-            placeholder="Enter Specializations"
-            rows={3}
-            onChange={(e) =>
-              setCreatorData((prev) => ({
-                ...prev,
-                specializations: e.target.value.split(", "),
-              }))
-            }
-            value={creatorData.specializations.join(", ")}
-          />
-        </div>
-        <div className="w-full h-12 flex justify-center items-center mt-4 text-lg font-semibold">
-          <button
-            className="bg-blue-600 text-white hover:bg-blue-700 shadow-md px-14 py-2 rounded-full"
-            onClick={handleAddCreatorSubmit}
-          >
-            Add Creator
-          </button>
+
+        {/* Right Column */}
+        <div className="flex-1 overflow-y-auto pb-4">
+          {/* Social Media Links */}
+          <div className="mb-4">
+            <label
+              htmlFor="url"
+              className="text-lg font-medium text-slate-700 dark:text-slate-300"
+            >
+              Social Media Links:
+            </label>
+            <div className="flex flex-col gap-4 mt-2">
+              <div className="flex gap-2">
+                <select
+                  name="platform"
+                  id="platform"
+                  value={socialMediaData.platform}
+                  onChange={handleSocialMediaInputChange}
+                  className="rounded-md border border-gray-300 dark:text-slate-700 dark:border-gray-600 focus:outline-none focus:border-gray-400 dark:focus:border-gray-400"
+                >
+                  <option value="">Select Platform</option>
+                  {socialMediaPlatforms.map((platform) => (
+                    <option key={platform.id} value={platform.label}>
+                      {platform.value}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  name="url"
+                  id="url"
+                  placeholder="Enter URL"
+                  className="w-full h-12 px-3 border border-gray-300 dark:border-gray-600 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-blue-400"
+                  value={socialMediaData.url}
+                  onChange={handleSocialMediaInputChange}
+                />
+                <button
+                  type="button"
+                  className="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-500 text-white text-3xl hover:bg-blue-600"
+                  onClick={handleAddSocialMediaLink}
+                >
+                  <MdAddLink />
+                </button>
+              </div>
+
+              {/* Display Social Media Links */}
+              {creatorData.socialMediaLinks.length > 0 && (
+                <div>
+                  {creatorData.socialMediaLinks.map((link, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md mt-2"
+                    >
+                      <p className="text-lg font-semibold text-slate-800 dark:text-slate-200">
+                        {link.platform}
+                      </p>
+                      <div className="flex gap-2">
+                        <button
+                          className="p-2 bg-green-500 rounded-full text-white hover:bg-green-600"
+                          onClick={() => handleEditSocialMediaLink(index)}
+                        >
+                          <MdModeEdit />
+                        </button>
+                        <button
+                          className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600"
+                          onClick={() => handleDeleteSocialMediaLink(index)}
+                        >
+                          <MdDeleteOutline />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="mb-4">
+            <label
+              htmlFor="description"
+              className="text-lg font-medium text-slate-700 dark:text-slate-300"
+            >
+              Description:
+            </label>
+            <textarea
+              name="description"
+              id="description"
+              className="w-full h-36 px-3 border border-gray-300 dark:border-gray-600 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 mt-2 resize-none"
+              placeholder="Enter description"
+              rows={3}
+              onChange={handleInputChange}
+              value={creatorData.description}
+            />
+          </div>
+
+          {/* Languages */}
+          <div className="mb-4">
+            <label
+              htmlFor="languages"
+              className="text-lg font-medium text-slate-700 dark:text-slate-300"
+            >
+              Languages:
+              <span className="text-red-700 text-xs">
+                {" "}
+                Press Enter key after each language*
+              </span>
+            </label>
+            <textarea
+              name="languages"
+              id="languages"
+              className="w-full h-36 px-3 border border-gray-300 dark:border-gray-600 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 mt-2 resize-none"
+              placeholder="Enter Languages"
+              rows={3}
+              onChange={(e) =>
+                setCreatorData((prev) => ({
+                  ...prev,
+                  languages: e.target.value
+                    .split(", ")
+                    .map((lang) => lang.trim())
+                    .filter(Boolean),
+                }))
+              }
+              value={creatorData.languages.join(", ")}
+            />
+          </div>
+
+          {/* Specialization */}
+          <div className="mb-4">
+            <label
+              htmlFor="specialization"
+              className="text-lg font-medium text-slate-700 dark:text-slate-300"
+            >
+              Specialization:
+              <span className="text-red-700 text-xs">
+                {" "}
+                Press Enter key after each specialization*
+              </span>
+            </label>
+            <textarea
+              name="specialization"
+              id="specialization"
+              className="w-full h-36 px-3 border border-gray-300 dark:border-gray-600 dark:text-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 mt-2 resize-none"
+              placeholder="Enter Specializations"
+              rows={3}
+              onChange={(e) =>
+                setCreatorData((prev) => ({
+                  ...prev,
+                  specializations: e.target.value
+                    .split(", ")
+                    .map((spec) => spec.trim())
+                    .filter(Boolean),
+                }))
+              }
+              value={creatorData.specializations.join(", ")}
+            />
+          </div>
+
+          {/* Submit Button */}
+          <div className="flex justify-center mt-6">
+            <button
+              type="button"
+              className="bg-blue-600 text-white hover:bg-blue-700 shadow-md px-8 py-2 rounded-full"
+              onClick={handleAddCreatorSubmit}
+            >
+              Add Creator
+            </button>
+          </div>
         </div>
       </div>
     </form>

@@ -59,7 +59,7 @@ function App() {
   }, []);
   return (
     <Context.Provider value={{ fetchAllCreators, fetchCurrentCreator }}>
-      <div className="w-full h-full min-h-screen max-h-screen overflow-scroll scrollbar-none bg-slate-200">
+      <div className="w-full h-full min-h-screen max-h-screen overflow-scroll scrollbar-none dark:bg-darkBackground bg-slate-200">
         <Header />
         <main className="pt-16 base:pt-16 sm:pt-16 md:pt-20 lg:pt-24 w-full h-full dark:bg-darkBackground dark:text-darkText">
           <Outlet />

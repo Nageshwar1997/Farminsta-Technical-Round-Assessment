@@ -41,7 +41,7 @@ const Home = () => {
 
   // console.log("creators", creators);
   return (
-    <div className="w-full h-full max-h-[100vh-80px] px-4 sm:px-6 md:px-8 lg:px-10 overflow-y-scroll">
+    <div className="w-full h-full max-h-[100vh-80px] px-4 sm:px-6 md:px-8 lg:px-10 overflow-y-scroll scrollbar-none">
       <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-5">
         {creators?.map((creator) => (
           <div

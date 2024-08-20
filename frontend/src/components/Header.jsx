@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import languagesList from "../helpers/languagesList";
@@ -79,7 +80,7 @@ const Header = () => {
 
   // Component mount hone par search input ko focus karte hain
   useEffect(() => {
-    if (searchInputRef.current) {
+    if (searchInputRef.current && !isSmallScreen) {
       searchInputRef.current.focus();
     }
   }, []);
@@ -124,14 +125,15 @@ const Header = () => {
           onChange={handleSearchInput}
           disabled={
             pathname.includes("/view-creator-details") ||
-            pathname.includes("/edit-creator")
+            pathname.includes("/edit-creator") ||
+            pathname.includes("/add-creator")
           }
           placeholder="Search Creators..."
           className="w-full px-4 py-2 border border-gray-300 dark:border-darkText rounded-md shadow-md bg-white dark:bg-gray-800 text-gray-800 dark:text-darkText focus:outline-none focus:border-blue-500 dark:focus:border-blue-300 transition-colors duration-300 ease-in-out"
         />
         {showFilters ? (
           <button
-            className="ml-2 p-2 sm:hidden rounded-full border border-gray-300 dark:border-darkText transition-colors duration-300 ease-in-out bg-gray-200 dark:bg-darkBackground text-gray-800 dark:text-darkText hover:bg-gray-300 dark:hover:bg-darkBackgroundDark focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300"
+            className="ml-2 p-2 sm:hidden rounded-full border border-gray-300 dark:border-darkText transition-colors duration-300 ease-in-out bg-gray-200 dark:bg-darkBackground text-gray-800 dark:text-darkText hover:bg-gray-300 dark:hover:bg-darkBackground focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300"
             onClick={() => {
               setShowFilters(false);
             }}
@@ -140,7 +142,7 @@ const Header = () => {
           </button>
         ) : (
           <button
-            className="ml-2 p-2 sm:hidden rounded-full border border-gray-300 dark:border-darkText transition-colors duration-300 ease-in-out bg-gray-200 dark:bg-darkBackground text-gray-800 dark:text-darkText hover:bg-gray-300 dark:hover:bg-darkBackgroundDark focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300"
+            className="ml-2 p-2 sm:hidden rounded-full border border-gray-300 dark:border-darkText transition-colors duration-300 ease-in-out bg-gray-200 dark:bg-darkBackground text-gray-800 dark:text-darkText hover:bg-gray-300 dark:hover:bg-darkBackground focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300"
             onClick={() => {
               setShowFilters(true);
             }}
@@ -169,7 +171,8 @@ const Header = () => {
               onChange={handleFilterChange(setSelectedLanguage)}
               disabled={
                 pathname.includes("/view-creator-details") ||
-                pathname.includes("/edit-creator")
+                pathname.includes("/edit-creator") ||
+                pathname.includes("/add-creator")
               }
               className="w-full py-2 px-3 text-sm rounded-md border border-gray-300 dark:border-darkText bg-slate-100 dark:bg-gray-700 dark:text-darkText shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out"
             >
@@ -189,7 +192,8 @@ const Header = () => {
               value={pathname === "/search" ? selectedEducation : ""}
               disabled={
                 pathname.includes("/view-creator-details") ||
-                pathname.includes("/edit-creator")
+                pathname.includes("/edit-creator") ||
+                pathname.includes("/add-creator")
               }
               onChange={handleFilterChange(setSelectedEducation)}
               className="w-full py-2 px-3 text-sm rounded-md border border-gray-300 dark:border-darkText bg-slate-100 dark:bg-gray-700 dark:text-darkText shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out"
@@ -211,7 +215,8 @@ const Header = () => {
               onChange={handleFilterChange(setSelectedSpecialization)}
               disabled={
                 pathname.includes("/view-creator-details") ||
-                pathname.includes("/edit-creator")
+                pathname.includes("/edit-creator") ||
+                pathname.includes("/add-creator")
               }
               className="w-full py-2 px-3 text-sm rounded-md border border-gray-300 dark:border-darkText bg-slate-100 dark:bg-gray-700 dark:text-darkText shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out"
             >
@@ -239,6 +244,7 @@ const Header = () => {
             {pathname === "/" && (
               <Link
                 to={"/add-creator"}
+                onClick={() => setShowFilters(false)}
                 className="min-w-[120px] w-full py-2 px-4 text-sm rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out truncate"
               >
                 Add New
@@ -247,6 +253,7 @@ const Header = () => {
             {pathname === "/add-creator" && (
               <Link
                 to={"/"}
+                onClick={() => setShowFilters(false)}
                 className="min-w-[120px] w-full py-2 px-4 text-sm rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out truncate"
               >
                 Cancel
@@ -256,6 +263,7 @@ const Header = () => {
               pathname.includes("/edit-creator")) && (
               <Link
                 to={"/"}
+                onClick={() => setShowFilters(false)}
                 className="min-w-[120px] w-full py-2 px-4 text-sm rounded-md text-center bg-blue-400 border border-blue-300 dark:border-blue-600 text-white hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 transition-colors duration-300 ease-in-out truncate"
               >
                 Home

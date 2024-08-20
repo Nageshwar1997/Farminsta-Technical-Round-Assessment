@@ -160,10 +160,10 @@ const EditCreator = () => {
   console.log("creatorData", creatorData);
 
   return (
-    <form className="w-full min-h-screen flex flex-col gap-8 p-4 bg-slate-200 dark:bg-darkBackground px-4 sm:px-6 md:px-10 lg:px-14">
+    <form className="w-full min-h-screen flex flex-col gap-8 bg-slate-200 dark:bg-darkBackground px-4 sm:px-6 md:px-8 lg:px-10">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left Column */}
-        <div className="flex-1 overflow-y-auto py-4">
+        <div className="flex-1 overflow-y-auto pb-4">
           <h2 className="text-2xl font-semibold mb-4 text-center text-slate-800 dark:text-slate-200">
             Update Creator
           </h2>
@@ -307,7 +307,7 @@ const EditCreator = () => {
         </div>
 
         {/* Right Column */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto pb-4">
           {/* Social Media Links */}
           <div>
             <label
