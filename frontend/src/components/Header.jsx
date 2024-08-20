@@ -5,7 +5,6 @@ import educationsList from "../helpers/educationsList";
 import specializationsList from "../helpers/specializationsList";
 
 const Header = () => {
-  const searchInputRef = useRef();
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
   const URLSearch = new URLSearchParams(search);
@@ -54,11 +53,8 @@ const Header = () => {
     navigate("/search");
   };
 
-  useEffect(() => {
-    // if (searchInputRef.current) {
-    //   searchInputRef.current.focus();
-    // }
-  }, []);
+  console.log("REACT_APP_BACKEND_URL", process.env.REACT_APP_BACKEND_URL);
+
 
   return (
   <header className="fixed top-0 left-0 w-full h-16 z-10 shadow-md bg-gray-200 flex flex-col sm:flex-row justify-between items-center px-4 sm:px-6 md:px-8 lg:px-10">
@@ -66,7 +62,6 @@ const Header = () => {
     <div className="w-full sm:w-1/2 h-12 flex items-center justify-center mb-2 sm:mb-0">
       <input
         type="text"
-        ref={searchInputRef}
         value={pathname === "/search" && search ? searchInput : ""}
         onChange={handleSearchInput}
         placeholder="Search Creators..."

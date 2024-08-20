@@ -7,7 +7,7 @@ const CreatorModel = require("./models/creatorModel");
 const app = express();
 app.use(
   cors({
-    origin: "https://farminsta-technical-round-assessment-frontend.vercel.app",
+    origin: ["https://farminsta-technical-round-assessment-frontend.vercel.app", "http://localhost:3000"],
     methods: ["GET", "POST", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
