@@ -228,9 +228,7 @@ const EditCreator = () => {
             {/* Banner Image */}
             {creatorData?.bannerImageUrl && (
               <div>
-                <label
-                  className="block text-lg font-medium mt-4 text-slate-700 dark:text-slate-300"
-                >
+                <label className="block text-lg font-medium mt-4 text-slate-700 dark:text-slate-300">
                   Banner Image:
                 </label>
 
