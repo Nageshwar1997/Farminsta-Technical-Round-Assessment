@@ -8,6 +8,7 @@ import Context from "../context";
 import { useLocation } from "react-router-dom";
 import SummaryApi from "../common";
 import toast from "react-hot-toast";
+import LoadingHome from "../components/loadingIndicators/LoadingHome";
 
 // Helper function to get social media icons
 const getIconForLabel = (label, socialMediaIcons) => {
@@ -27,23 +28,30 @@ const SearchCreators = () => {
   // Hooks
   const [searchCreators, setSearchCreators] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const { fetchCurrentCreator } = useContext(Context);
   const query = useLocation().search;
 
   // Fetch functions
   const fetchAllCreators = async () => {
+    setLoading(true);
     try {
       const response = await fetch(SummaryApi.getAllCreators.url, {
         method: SummaryApi.getAllCreators.method,
       });
       const responseData = await response.json();
       if (responseData.success) {
+        setLoading(false);
         setSearchCreators(responseData.creators);
       }
       if (responseData.error) {
+        setLoading(false);
+        setError(true);
         toast.error(responseData.message);
       }
     } catch (error) {
+      setLoading(false);
+      setError(true);
       console.error("Error fetching all creators:", error);
       toast.error(error.message || "Something went wrong");
     }
@@ -56,11 +64,24 @@ const SearchCreators = () => {
         method: SummaryApi.searchCreators.method,
       });
       const responseData = await response.json();
-      setSearchCreators(responseData.creators);
+
+      if (responseData.success) {
+        setLoading(false);
+        setSearchCreators(responseData.creators);
+      }
+      if (responseData.error) {
+        setLoading(false);
+        setError(true);
+        toast.error(responseData.message);
+      }
     } catch (error) {
+      setLoading(false);
+      setError(true);
       console.error("Error fetching search results:", error);
+      toast.error(error.message || "Something went wrong");
     } finally {
       setLoading(false);
+      setError(false);
     }
   };
 
@@ -88,7 +109,9 @@ const SearchCreators = () => {
     )
     .join(", ");
 
-  return (
+  return loading && !error ? (
+    <LoadingHome />
+  ) : (
     <>
       <div className="w-full h-full max-h-[100vh-80px] px-4 sm:px-6 md:px-8 lg:px-10 overflow-y-scroll scrollbar-none">
         {query && (

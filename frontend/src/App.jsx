@@ -6,15 +6,18 @@ import Context from "./context";
 import { useDispatch } from "react-redux";
 import SummaryApi from "./common";
 import toast from "react-hot-toast";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { setCreatorsDetails, setCurrentCreator } from "./store/creatorReducer";
 import { ThemeContext } from "./context/theme.context";
 import { FaSun, FaMoon } from "react-icons/fa";
 function App() {
   const dispatch = useDispatch();
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const fetchAllCreators = async () => {
+    setLoading(true);
     try {
       const response = await fetch(SummaryApi.getAllCreators.url, {
         method: SummaryApi.getAllCreators.method,
@@ -22,13 +25,18 @@ function App() {
       const responseData = await response.json();
 
       if (responseData.success) {
+        // setLoading(false);
         dispatch(setCreatorsDetails(responseData.creators));
       }
 
       if (responseData.error) {
+        setLoading(false);
+        setError(true);
         toast.error(responseData.message);
       }
     } catch (error) {
+      setLoading(false);
+      setError(true);
       console.log("error", error);
       toast.error(error.message || "Something went wrong");
     }
@@ -58,7 +66,7 @@ function App() {
     fetchAllCreators();
   }, []);
   return (
-    <Context.Provider value={{ fetchAllCreators, fetchCurrentCreator }}>
+    <Context.Provider value={{ fetchAllCreators, fetchCurrentCreator, loading, error }}>
       <div className="w-full h-full min-h-screen max-h-screen overflow-scroll scrollbar-none dark:bg-darkBackground bg-slate-200">
         <Header />
         <main className="pt-16 base:pt-16 sm:pt-16 md:pt-20 lg:pt-24 w-full h-full dark:bg-darkBackground dark:text-darkText">

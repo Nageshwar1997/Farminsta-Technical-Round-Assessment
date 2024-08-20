@@ -6,9 +6,10 @@ import { MdOutlineMail } from "react-icons/md";
 import { GrUserExpert } from "react-icons/gr";
 import { FaTiktok, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 import Context from "../context";
+import LoadingHome from "../components/loadingIndicators/LoadingHome";
 
 const Home = () => {
-  const { fetchCurrentCreator } = useContext(Context);
+  const { fetchCurrentCreator, loading, error } = useContext(Context);
 
   const creators = useSelector((state) => state?.creators?.creators);
   const socialMediaIcons = [
@@ -40,7 +41,9 @@ const Home = () => {
   };
 
   // console.log("creators", creators);
-  return (
+  return loading && !error ? (
+    <LoadingHome />
+  ) : (
     <div className="w-full h-full max-h-[100vh-80px] px-4 sm:px-6 md:px-8 lg:px-10 overflow-y-scroll scrollbar-none">
       <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-5">
         {creators?.map((creator) => (
@@ -121,7 +124,6 @@ const Home = () => {
       </div>
     </div>
   );
-
 };
 
 export default Home;
