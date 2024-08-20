@@ -25,7 +25,7 @@ function App() {
       const responseData = await response.json();
 
       if (responseData.success) {
-        // setLoading(false);
+        setLoading(false);
         dispatch(setCreatorsDetails(responseData.creators));
       }
 
